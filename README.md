@@ -3,30 +3,30 @@ This is a Node.js-based application providing a REST API for managing products a
 
 ## Features
 Admin Features:
-View all products - Admin can get a list of all products.
+-View all products - Admin can get a list of all products.
 
-View single product details - Admin can view detailed information of a specific product.
+-View single product details - Admin can view detailed information of a specific product.
 
-Update a product - Admin can update details like name, description, price, and category.
+-Update a product - Admin can update details like name, description, price, and category.
 
-Delete a product - Admin can delete a product from the system.
+-Delete a product - Admin can delete a product from the system.
 
 ## User Features:
-Sign Up - Users can create an account with an email, password, and optional role.
+-Sign Up - Users can create an account with an email, password, and optional role.
 
-Login - Users can log in and receive a token for authentication.
+-Login - Users can log in and receive a token for authentication.
 
-Logout - Users can log out, clearing the authentication token.
+-Logout - Users can log out, clearing the authentication token.
 
-Add a product - Authenticated users can add their own products.
+-Add a product - Authenticated users can add their own products.
 
-View products - Authenticated users can view all products they have created.
+-View products - Authenticated users can view all products they have created.
 
-View single product - Users can view details of a specific product they created.
+-View single product - Users can view details of a specific product they created.
 
-Update product - Users can update their products (only if they created them).
+-Update product - Users can update their products (only if they created them).
 
-Delete product - Users can delete their own products.
+-Delete product - Users can delete their own products.
 
 ## Prerequisites
 Before you begin, ensure you have the following installed:
