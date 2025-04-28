@@ -1,4 +1,5 @@
 # Product Management API
+
 This is a Node.js-based application providing a REST API for managing products and users. It includes features for admin and user roles, including user authentication, product creation, and management.
 
 ## Features
@@ -37,6 +38,7 @@ Before you begin, ensure you have the following installed:
 Setup
 Clone the repository:
 ```
+git clone git@github.com:an9644/Product-Management-API-.git
 ```
 Install dependencies:
 ```
