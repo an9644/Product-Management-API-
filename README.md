@@ -51,36 +51,30 @@ npm start
 ```
 
 API Documentation
-Admin Routes
-GET /admin/products
 
+
+### Admin Routes
+- GET /admin/products
 Description: Fetch all products.
-GET /admin/product/:productI
 
-{
-  "product": {...}
-}
+- GET /admin
+   Description:Fetching Product by Product Is
 
 - PUT /admin/product/:productId
 
 Description: Update a product by ID.
 ```
-
 {
   "name": "Product Name",
   "description": "Product Description",
   "price": 100,
   "category": "Category Name"
 }
+
 ```
 - DELETE /admin/product/:productId
 
 Description: Delete a product by ID.
-```
-{
-  "message": "Product deleted successfully"
-}
-```
 
 ## User Routes
 
@@ -92,7 +86,7 @@ Description: Register a new user.
   "name": "John Doe",
   "email": "john.doe@example.com",
   "password": "password123",
-  "role": "user"  // Optional (defaults to 'user')
+  "role": "user" 
 }
 ```
 - POST /login
@@ -122,19 +116,11 @@ Description: Add a new product (authenticated users only).
 - GET /products
 
 Description: Fetch all products created by the authenticated user.
-```
-{
-  "products": [{...}, {...}]
-}
-```
+
 - GET /product/:productId
 
 Description: Fetch a single product by ID (created by the authenticated user).
-```
-{
-  "product": {...}
-}
-```
+
 - PUT /product/:productId
 
 Description: Update a product (only if created by the authenticated user).
@@ -149,58 +135,4 @@ Description: Update a product (only if created by the authenticated user).
 - DELETE /product/:productId
 
 Description: Delete a product (only if created by the authenticated user).
-
-# User Routes:
-- POST /signup
-```
-{
-  "name": "Jane Doe",
-  "email": "jane.doe@example.com",
-  "password": "password123"
-}
-```
-- POST /login
- ```
-{
-  "email": "jane.doe@example.com",
-  "password": "password123"
-}
-```
-- POST /product
-```
-{
-  "name": "New Product",
-  "description": "New Product Description",
-  "price": 100,
-  "category": "Electronics"
-}
-```
-GET /products
-
-Headers:
-
-Authorization: Bearer <user_token>
-
-GET /product/{productId}
-
-Headers:
-
-Authorization: Bearer <user_token>
-
-PUT /product/{productId}
-
-Headers:
-
-Authorization: Bearer <user_token>
-```
-{
-  "name": "Updated Product",
-  "description": "Updated Product Description",
-  "price": 110,
-  "category": "Updated Category"
-}
-```
-- DELETE /product/{productId}
-
-Product data is deleted
 
