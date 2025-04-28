@@ -53,232 +53,126 @@ Admin Routes
 GET /admin/products
 
 Description: Fetch all products.
+GET /admin/product/:productI
 
-Authorization: Admin
-
-Response:
-json
-Copy
-Edit
-{
-  "products": [{...}, {...}]
-}
-GET /admin/product/:productId
-
-Description: Fetch a single product by ID.
-
-Authorization: Admin
-
-Response:
-
-json
-Copy
-Edit
 {
   "product": {...}
 }
-PUT /admin/product/:productId
+
+- PUT /admin/product/:productId
 
 Description: Update a product by ID.
+```
 
-Authorization: Admin
-
-Request Body:
-
-json
-Copy
-Edit
 {
   "name": "Product Name",
   "description": "Product Description",
   "price": 100,
   "category": "Category Name"
 }
-DELETE /admin/product/:productId
+```
+- DELETE /admin/product/:productId
 
 Description: Delete a product by ID.
-
-Authorization: Admin
-
-Response:
-
-json
-Copy
-Edit
+```
 {
   "message": "Product deleted successfully"
 }
-User Routes
-POST /signup
+```
+
+## User Routes
+
+- POST /signup
 
 Description: Register a new user.
-
-Request Body:
-
-json
-Copy
-Edit
+```
 {
   "name": "John Doe",
   "email": "john.doe@example.com",
   "password": "password123",
   "role": "user"  // Optional (defaults to 'user')
 }
-POST /login
+```
+- POST /login
 
 Description: Login with email and password.
-
-Request Body:
-
-json
-Copy
-Edit
+```
 {
   "email": "john.doe@example.com",
   "password": "password123"
 }
-POST /logout
+```
+- POST /logout
 
 Description: Logout the current user.
 
-POST /product
+- POST /product
 
 Description: Add a new product (authenticated users only).
-
-Request Body:
-
-json
-Copy
-Edit
+```
 {
   "name": "Product Name",
   "description": "Product Description",
   "price": 100,
   "category": "Category Name"
 }
-GET /products
+```
+- GET /products
 
 Description: Fetch all products created by the authenticated user.
-
-Response:
-
-json
-Copy
-Edit
+```
 {
   "products": [{...}, {...}]
 }
-GET /product/:productId
+```
+- GET /product/:productId
 
 Description: Fetch a single product by ID (created by the authenticated user).
-
-Response:
-
-json
-Copy
-Edit
+```
 {
   "product": {...}
 }
-PUT /product/:productId
+```
+- PUT /product/:productId
 
 Description: Update a product (only if created by the authenticated user).
-
-Request Body:
-
-json
-Copy
-Edit
+```
 {
   "name": "Updated Name",
   "description": "Updated Description",
   "price": 150,
   "category": "Updated Category"
 }
-DELETE /product/:productId
+```
+- DELETE /product/:productId
 
 Description: Delete a product (only if created by the authenticated user).
 
-Postman Collection
-You can use the following data to test the routes in Postman:
-
-Admin Routes:
-GET /admin/products
-
-Headers:
-
-Authorization: Bearer <admin_token>
-
-GET /admin/product/{productId}
-
-Headers:
-
-Authorization: Bearer <admin_token>
-
-PUT /admin/product/{productId}
-
-Headers:
-
-Authorization: Bearer <admin_token>
-
-Body:
-
-json
-Copy
-Edit
-{
-  "name": "Updated Product",
-  "description": "Updated Description",
-  "price": 120,
-  "category": "Updated Category"
-}
-DELETE /admin/product/{productId}
-
-Headers:
-
-Authorization: Bearer <admin_token>
-
-User Routes:
-POST /signup
-
-Body:
-
-json
-Copy
-Edit
+# User Routes:
+- POST /signup
+```
 {
   "name": "Jane Doe",
   "email": "jane.doe@example.com",
   "password": "password123"
 }
-POST /login
-
-Body:
-
-json
-Copy
-Edit
+```
+- POST /login
+ ```
 {
   "email": "jane.doe@example.com",
   "password": "password123"
 }
-POST /product
-
-Headers:
-
-Authorization: Bearer <user_token>
-
-Body:
-
-json
-Copy
-Edit
+```
+- POST /product
+```
 {
   "name": "New Product",
   "description": "New Product Description",
   "price": 100,
   "category": "Electronics"
 }
+```
 GET /products
 
 Headers:
@@ -296,20 +190,15 @@ PUT /product/{productId}
 Headers:
 
 Authorization: Bearer <user_token>
-
-Body:
-
-json
-Copy
-Edit
+```
 {
   "name": "Updated Product",
   "description": "Updated Product Description",
   "price": 110,
   "category": "Updated Category"
 }
-DELETE /product/{productId}
+```
+- DELETE /product/{productId}
 
-Headers:
+Product data is deleted
 
-Authorization: Bearer <user_token>
