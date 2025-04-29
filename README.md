@@ -49,90 +49,10 @@ Run the server:
 ```
 npm start
 ```
-
-API Documentation
-
-
-### Admin Routes
-- GET /admin/products
-Description: Fetch all products.
-
-- GET /admin
-   Description:Fetching Product by Product Is
-
-- PUT /admin/product/:productId
-
-Description: Update a product by ID.
+POSTMAN published url
 ```
-{
-  "name": "Product Name",
-  "description": "Product Description",
-  "price": 100,
-  "category": "Category Name"
-}
-
+https://documenter.getpostman.com/view/39076109/2sB2j3ArB5
 ```
-- DELETE /admin/product/:productId
 
-Description: Delete a product by ID.
 
-## User Routes
-
-- POST /signup
-
-Description: Register a new user.
-```
-{
-  "name": "John Doe",
-  "email": "john.doe@example.com",
-  "password": "password123",
-  "role": "user" 
-}
-```
-- POST /login
-
-Description: Login with email and password.
-```
-{
-  "email": "john.doe@example.com",
-  "password": "password123"
-}
-```
-- POST /logout
-
-Description: Logout the current user.
-
-- POST /product
-
-Description: Add a new product (authenticated users only).
-```
-{
-  "name": "Product Name",
-  "description": "Product Description",
-  "price": 100,
-  "category": "Category Name"
-}
-```
-- GET /products
-
-Description: Fetch all products created by the authenticated user.
-
-- GET /product/:productId
-
-Description: Fetch a single product by ID (created by the authenticated user).
-
-- PUT /product/:productId
-
-Description: Update a product (only if created by the authenticated user).
-```
-{
-  "name": "Updated Name",
-  "description": "Updated Description",
-  "price": 150,
-  "category": "Updated Category"
-}
-```
-- DELETE /product/:productId
-
-Description: Delete a product (only if created by the authenticated user).
-
+ 
