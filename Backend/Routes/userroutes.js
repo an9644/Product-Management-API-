@@ -2,10 +2,11 @@ import { Router } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User, Product } from '../Models/Schema.js';
-import authenticate from '../Middleware/auth';
+import { authenticate } from '../Middleware/auth.js';
 
-export const userRouter = Router();
+const userRouter = Router();
 
+// Auto-generate user ID
 async function generateUserId(role) {
   if (role === 'admin') return "ADMIN01";
   const count = await User.countDocuments({ role: "user" });
@@ -13,6 +14,7 @@ async function generateUserId(role) {
   return id;
 }
 
+// Signup
 userRouter.post('/signup', async (req, res) => {
   try {
     const { name, email, password, role = 'user' } = req.body;
@@ -26,11 +28,12 @@ userRouter.post('/signup', async (req, res) => {
     await user.save();
 
     res.status(202).json({ message: "User registered" });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  } catch (error) {
+    res.status(500).json(error);
   }
 });
 
+// Login
 userRouter.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -40,46 +43,64 @@ userRouter.post('/login', async (req, res) => {
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(400).json({ message: "Invalid credentials" });
 
-    const token = jwt.sign({ userId: user.userId, role: user.role }, process.env.Secretkey, { expiresIn: '1h' });
+    const token = jwt.sign(
+      { userId: user.userId, role: user.role },
+      process.env.Secretkey,
+      { expiresIn: '1h' }
+    );
+
     res.cookie('Authtoken', token, { httpOnly: true });
     res.status(200).json({ message: "Login successful", token });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  } catch (error) {
+    res.status(500).json(error);
   }
 });
 
+// Logout
 userRouter.post('/logout', (req, res) => {
   res.clearCookie('Authtoken');
   res.status(200).json({ message: "Logged out successfully" });
 });
 
-// Protect routes by adding the `authenticate` middleware
+// Create Product
 userRouter.post('/product', authenticate, async (req, res) => {
   try {
     const { name, description, price, category } = req.body;
-    const createdBy = req.userType;
+    const createdBy = req.userId;
 
-    const productId = "PRODUCT" + (await Product.countDocuments() + 1);
-    const product = new Product({ productId, name, description, price, category, createdBy });
+    const count = await Product.countDocuments();
+    const productId = "PRODUCT" + (count + 1);
+
+    const product = new Product({
+      productId,
+      name,
+      description,
+      price,
+      category,
+      createdBy
+    });
 
     await product.save();
     res.status(202).json({ message: "Product added successfully", product });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  } catch (error) {
+    res.status(500).json(error);
   }
 });
 
+// Get Products by Logged-In User
 userRouter.get('/products', authenticate, async (req, res) => {
   try {
-    const createdBy = req.userType;
+    const { userId, role } = req;
+    const filter = role === 'admin' ? {} : { createdBy: userId };
 
-    const products = await Product.find({ createdBy });
+    const products = await Product.find(filter);
     res.status(200).json({ products });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  } catch (error) {
+    res.status(500).json(error);
   }
 });
 
+// Get Single Product
 userRouter.get('/product/:productId', authenticate, async (req, res) => {
   try {
     const { productId } = req.params;
@@ -88,20 +109,22 @@ userRouter.get('/product/:productId', authenticate, async (req, res) => {
     if (!product) return res.status(404).json({ message: "Product not found" });
 
     res.status(200).json({ product });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  } catch (error) {
+    res.status(500).json(error);
   }
 });
 
+// Update Product
 userRouter.put('/product/:productId', authenticate, async (req, res) => {
   try {
     const { productId } = req.params;
     const { name, description, price, category } = req.body;
+    const { userId, role } = req;
 
     const product = await Product.findOne({ productId });
     if (!product) return res.status(404).json({ message: "Product not found" });
 
-    if (product.createdBy !== req.userType) {
+    if (product.createdBy !== userId && role !== 'admin') {
       return res.status(403).json({ message: "Not authorized to update this product" });
     }
 
@@ -112,25 +135,29 @@ userRouter.put('/product/:productId', authenticate, async (req, res) => {
 
     await product.save();
     res.status(200).json({ message: "Product updated successfully", product });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  } catch (error) {
+    res.status(500).json(error);
   }
 });
 
-userRouter.delete('/product/:productId',authenticate,async (req, res) => {
+// Delete Product
+userRouter.delete('/product/:productId', authenticate, async (req, res) => {
   try {
     const { productId } = req.params;
+    const { userId, role } = req;
 
     const product = await Product.findOne({ productId });
     if (!product) return res.status(404).json({ message: "Product not found" });
 
-    if (product.createdBy !== req.userType) {
+    if (product.createdBy !== userId && role !== 'admin') {
       return res.status(403).json({ message: "Not authorized to delete this product" });
     }
 
     await product.deleteOne();
     res.status(200).json({ message: "Product deleted successfully" });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  } catch (error) {
+    res.status(500).json(error);
   }
 });
+
+export { userRouter };

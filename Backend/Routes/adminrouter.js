@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { authenticate } from "../Middleware/auth.js"; 
 import dotenv from 'dotenv';
-import { User, Product } from '../Models/user.js'; 
+import { Product } from '../Models/Schema.js'; 
 
 dotenv.config();
 

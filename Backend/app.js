@@ -2,7 +2,7 @@ import express, { json } from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { userRouter } from './Routes/userroutes.js';
-import { adminRouter } from './Routes/adminroutes.js'; 
+import { adminRouter } from './Routes/adminrouter.js'; 
 
 dotenv.config();
 const app = express();
@@ -14,7 +14,7 @@ app.use(json());
 app.use('/', userRouter);
 app.use('/admin', adminRouter);
 
-const port = process.env.PORT || 5000; 
+const port = process.env.PORT ;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
